@@ -16,7 +16,7 @@ EXPIRATIONS = {
 
 class DropSerializer(serializers.ModelSerializer):
     expiration = serializers.ChoiceField(
-        choices=EXPIRATIONS.keys(),
+        choices=tuple(EXPIRATIONS.keys()),
         write_only=True,
     )
 
@@ -41,8 +41,6 @@ class DropSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         expiration = validated_data.pop("expiration")
 
-        validated_data["expires_at"] = (
-            timezone.now() + EXPIRATIONS[expiration]
-        )
+        validated_data["expires_at"] = timezone.now() + EXPIRATIONS[expiration]
 
         return super().create(validated_data)

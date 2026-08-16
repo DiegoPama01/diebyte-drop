@@ -1,4 +1,20 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.prod
+    env_file:
+      - path: .env.prod
+        required: false
+    environment:
+      DROP_API_BASE_URL: ${DROP_API_BASE_URL:-http://backend:8000/api}
+      DROP_PUBLIC_BASE_URL: ${DROP_PUBLIC_BASE_URL:-https://your-domain.com}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
   backend:
     build:
       context: .
