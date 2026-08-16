@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 const apiBaseUrl = process.env.DROP_API_BASE_URL || "http://127.0.0.1:8000/api"
-const publicBaseUrl = process.env.DROP_PUBLIC_BASE_URL || "http://127.0.0.1:8000"
+const publicBaseUrl = process.env.DROP_PUBLIC_BASE_URL || "http://127.0.0.1:3000"
 
 export async function POST(request: Request) {
   try {
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       ...data,
-      share_url: `${publicBaseUrl}/api/drops/${data.public_id}/`,
+      share_url: `${publicBaseUrl}/drops/${data.public_id}`,
     })
   } catch {
     return NextResponse.json(
